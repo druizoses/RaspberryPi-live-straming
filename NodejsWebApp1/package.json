@@ -3,7 +3,13 @@
   "version": "0.0.0",
   "description": "NodejsWebApp1",
   "main": "server.js",
-  "author": {
-    "name": "DavidRuiz"
+  "author": "DavidRuiz",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3"
   }
 }
