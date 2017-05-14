@@ -42,11 +42,30 @@ function startStreaming(io) {
         io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
         return;
     }
-    var args = ["-w", "640", "-h", "480", "-o", "./stream/image_stream.jpg", "-t", "999999999", "-tl", "10"];
-    proc = spawn('raspistill', args);
-    console.log('Watching for changes...');
-    app.set('watchingFile', true);
-    fs.watchFile('./stream/image_stream.jpg', function (current, previous) {
-        io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
-    })
+    
+    switch (process.platform) {
+        case "win32":
+            // Development case
+            console.log('Watching for changes...');
+            app.set('watchingFile', true);
+            fs.watchFile('/stream/image_stream.jpg', function (current, previous) {
+                io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
+            })
+            break;
+        case "linux":
+            // Raspberry pi case
+            var args = ["-w", "640", "-h", "480", "-o", "./stream/image_stream.jpg", "-t", "999999999", "-tl", "100"];
+            proc = spawn('raspistill', args);
+            console.log('Watching for changes...');
+            app.set('watchingFile', true);
+            fs.watchFile('./stream/image_stream.jpg', function (current, previous) {
+                io.sockets.emit('liveStream', 'image_stream.jpg?_t=' + (Math.random() * 100000));
+            })
+            break;
+        default:
+            break;
+    }
+    
+    
+    
 }

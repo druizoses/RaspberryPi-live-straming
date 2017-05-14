@@ -34,6 +34,7 @@
     <Content Include="index.html" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="stream\image_stream.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="stream\" />
